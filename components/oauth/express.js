@@ -39,6 +39,7 @@ module.exports = function(app){
   });
 
   app.get('/authorise', function(req, res) {
+    console.log("printing Query params",req.query.client_id,req.query.redirect_uri)
     return db.OAuthClient.findOne({
         where: {
           client_id: req.query.client_id,

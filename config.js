@@ -4,18 +4,18 @@
 
 module.exports = {
   sql: {
-    database: 'oauth_demo',
-    username: 'root',
-    password: '',
-    dialect: 'mysql', // PostgreSQL, MySQL, MariaDB, SQLite and MSSQL See more: http://docs.sequelizejs.com/en/latest/
+    database: 'redfenix_oauth',
+    username: 'sfe',
+    password: 'root1234',
+    dialect: 'postgresql', // PostgreSQL, MySQL, MariaDB, SQLite and MSSQL See more: http://docs.sequelizejs.com/en/latest/
     logging: true,
     timezone: '+05:30',
   },
-  mongo: {
-    uri: 'mongodb://gloryque:intranet@192.168.0.200:27017/gloryque_quarc'
-  },
+  // mongo: {
+  //   uri: 'mongodb://localhost@127.0.0.1:27017/gloryque_quarc'
+  // },
   seedDB:false,
   seedMongoDB:false,
   seedDBForce:true,
-  db:'mongo' // mongo,sql if you want to use any SQL change dialect above in sql config
+  db:'postgresql' // mongo,sql if you want to use any SQL change dialect above in sql config
 }
