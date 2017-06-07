@@ -11,6 +11,26 @@ var db = config.db==='mongo' ? require('./mongodb') : require('./sqldb');
 var oauth = require('./oauth')
 
 module.exports = function(app){
+
+  app.get('/oauth/tokeninfo', (req, res, next) => {
+    const access_token = req.query.access_token;
+    if(!access_token){
+      res.status(400).json({err: "no access token provided"})
+    }
+    return db.OAuthAccessToken.findOne({
+        where: {
+          access_token: access_token,
+        },
+        attributes: ['access_token', 'expires', 'scope'],
+      })
+      .then(function(model) {
+        if (!model) return res.status(404).json({ error: 'Invalid Access Token' });
+        return res.json(model);
+      }).catch(function(err){
+        return res.status(err.code || 500).json(err)
+      });
+  });
+
   app.all('/oauth/token', function(req,res,next){
     var request = new Request(req);
     var response = new Response(res);
@@ -39,7 +59,6 @@ module.exports = function(app){
   });
 
   app.get('/authorise', function(req, res) {
-    console.log("printing Query params",req.query.client_id,req.query.redirect_uri)
     return db.OAuthClient.findOne({
         where: {
           client_id: req.query.client_id,

@@ -213,7 +213,6 @@ function getUserFromClient(client) {
 
 function getRefreshToken(refreshToken) {
   if (!refreshToken || refreshToken === 'undefined') return false
-
   return OAuthRefreshToken
     .findOne({
       attributes: ['client_id', 'user_id', 'expires'],
@@ -237,8 +236,8 @@ function getRefreshToken(refreshToken) {
     });
 }
 
-function validateScope(token, client) {
-  return (user.scope === scope && client.scope === scope && scope !== null) ? scope : false
+function validateScope(token, client, scope) {
+  return (token.scope === scope && client.scope === scope && scope !== null) ? scope : false
 }
 
 function verifyScope(token, scope) {
@@ -260,7 +259,7 @@ module.exports = {
   revokeToken: revokeToken,
   saveToken: saveToken,//saveOAuthAccessToken, renamed to
   saveAuthorizationCode: saveAuthorizationCode, //renamed saveOAuthAuthorizationCode,
-  validateScope: validateScope,
+  // validateScope: validateScope,
   verifyScope: verifyScope,
 }
 
